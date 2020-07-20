@@ -7,14 +7,55 @@ class Popup extends React.Component {
     super(props);
 
     //show is the boolean we use to show / Hide the popup
-    this.state = { show: true };
-    componentDidMount = () => {};
+    this.state = {
+      show: true,
+      response: null,
+    };
   }
+  componentDidMount = () => {
+    const BASE_URL = "https://codifyinditest.com/script_test";
+    const API_CALL_URL = `${BASE_URL}` + "/api-test";
+    fetch(API_CALL_URL)
+      .then((response) => response.json())
+      .then((response) => {
+        const data = response["script test"];
+        this.setState({ response: data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   render() {
     if (!this.state.show) {
       return;
     }
+
+    const imageUrl = null;
+    const captionText = null;
+    const phoneNumber = null;
+
+    console.log(this.state);
+
+    if (this.state.response) {
+      const { feature_img, labels, phone_number } = this.state.response;
+      if (feature_img) {
+        imageUrl = feature_img;
+      }
+      if (labels) {
+        captionText = labels;
+      }
+      if (phone_number) {
+        phoneNumber = phone_number;
+      }
+    }
+
+    // console.log(
+    //   "=============================",
+    //   imageUrl,
+    //   captionText,
+    //   phoneNumber
+    // );
 
     return e(
       "div",
