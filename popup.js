@@ -10,11 +10,11 @@ class Popup extends React.Component {
     this.state = {
       show: true,
       response: null,
+      BASE_URL: "https://codifyinditest.com/script_test",
     };
   }
   componentDidMount = () => {
-    const BASE_URL = "https://codifyinditest.com/script_test";
-    const API_CALL_URL = `${BASE_URL}` + "/api-test";
+    const API_CALL_URL = `${this.state.BASE_URL}` + "/api-test";
     fetch(API_CALL_URL)
       .then((response) => response.json())
       .then((response) => {
@@ -31,16 +31,17 @@ class Popup extends React.Component {
       return;
     }
 
-    const imageUrl = null;
-    const captionText = null;
-    const phoneNumber = null;
+    let imageUrl = null;
+    let captionText = null;
+    let phoneNumber = null;
 
-    console.log(this.state);
+    const { BASE_URL } = this.state;
 
     if (this.state.response) {
       const { feature_img, labels, phone_number } = this.state.response;
       if (feature_img) {
-        imageUrl = feature_img;
+        const IMAGE_URL = `${BASE_URL}` + feature_img;
+        imageUrl = IMAGE_URL;
       }
       if (labels) {
         captionText = labels;
@@ -49,13 +50,6 @@ class Popup extends React.Component {
         phoneNumber = phone_number;
       }
     }
-
-    // console.log(
-    //   "=============================",
-    //   imageUrl,
-    //   captionText,
-    //   phoneNumber
-    // );
 
     return e(
       "div",
