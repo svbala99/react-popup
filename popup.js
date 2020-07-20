@@ -41,7 +41,7 @@ class Popup extends React.Component {
       const { feature_img, labels, phone_number } = this.state.response;
       if (feature_img) {
         const IMAGE_URL = `${BASE_URL}` + feature_img;
-        imageUrl = IMAGE_URL;
+        imageUrl = `url(${IMAGE_URL})`;
       }
       if (labels) {
         captionText = labels;
@@ -70,8 +70,7 @@ class Popup extends React.Component {
             height: 80,
             width: 200,
             backgroundSize: "cover",
-            backgroundImage:
-              "url('https://codifyinditest.com/script_test/wp-content/uploads/2020/04/image.png')",
+            backgroundImage: imageUrl,
           },
         },
         React.createElement(
@@ -98,7 +97,7 @@ class Popup extends React.Component {
                 fontSize: 18,
               },
             },
-            "Call Us Now"
+            captionText ? captionText : "Loading..."
           ),
           React.createElement(
             "div",
@@ -123,11 +122,11 @@ class Popup extends React.Component {
                   color: "#2FC41B",
                 },
                 onClick: function onClick() {
-                  navigator.clipboard.writeText("123");
+                  navigator.clipboard.writeText(captionText);
                   window.alert("Phone number Copied to Clipboard");
                 },
               },
-              "+1-408-123-4567"
+              phoneNumber ? phoneNumber : "..."
             )
           )
         ),
